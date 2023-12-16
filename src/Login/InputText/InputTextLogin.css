@@ -1,0 +1,9 @@
+.inputText :only-child{
+    display: flex;
+    border-radius: 12px;
+    size: 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: oblique;
+    font-size: larger;
+    background-color: rgba(255,255,255,0.2);
+}
