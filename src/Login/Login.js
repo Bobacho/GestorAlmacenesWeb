@@ -4,19 +4,25 @@ import './Login.css';
 import InputTextLogin from './InputText/InputTextLogin';
 import { render } from 'react-dom';
 import { useEffect, useState } from 'react';
-import { Link, redirectDocument, useNavigate} from 'react-router-dom';
+import { Link, json, redirectDocument, useNavigate} from 'react-router-dom';
 
 function Login() {
-  const userInput = document.getElementsByClassName("userInput")[0];
-  const passwordInput = document.getElementsByClassName("passwordInput")[0];
+
+  let [incorrect,setIncorrect]=useState(false);
+
   const navigate=useNavigate();
-  const HandleClick = async () => {
+
+  const HandleClick = () => {
+
+    let userInput = document.querySelectorAll(".userInput")[0];
+    let passwordInput = document.querySelectorAll(".passwordInput")[0];
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      nombreUsuario: userInput.value,
-      contraseña: passwordInput.value
+      "nombreUsuario": userInput.value,
+      "contraseña": passwordInput.value
     });
 
     var requestOptions = {
@@ -25,12 +31,25 @@ function Login() {
       body: raw,
       redirect: 'follow'
     };
-
+    let credenciales={
+      "nombreUsuario": userInput.value,
+      "contraseña": passwordInput.value,
+      "token": ""
+    };
     let request=fetch("http://localhost:8080/auth/login", requestOptions)
       .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-    navigate("/home");
+      .then(result => credenciales.token=JSON.parse(result).token)
+      .then(() => navigate('/home', {state:credenciales}))
+      .catch(() => setIncorrect(true));
+  }
+  const handleIncorrectCredentials=()=>{
+    if(incorrect){
+      return(
+        <div>
+          <h1 style={{color:'red'}}>Credenciales incorrectas</h1>
+        </div>
+      );
+    }
   }
   return (
     <section className='Login'>
@@ -54,6 +73,7 @@ function Login() {
           }} onClick={HandleClick}>
             <img src={require('../resources/iniciar-sesion.png')} height='70' width='100'></img>
           </button>
+        {handleIncorrectCredentials()}
       </div>
     </section>
   );
