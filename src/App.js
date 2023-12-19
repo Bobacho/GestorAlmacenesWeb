@@ -17,7 +17,7 @@ function App() {
   return (
     <Routes>
       {loginRoutes()}
-      <Route path="/home" Component={Home()}/>
+      <Route path="/home" Component={Home}/>
     </Routes>
   );
 }
