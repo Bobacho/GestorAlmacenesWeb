@@ -1,0 +1,16 @@
+.block-container.st-emotion-cache-1y4p8pa.ea3mdgi2{
+    display: grid;
+    background-color: rgba(255,255,255,0.5);
+    margin-top: 10%;
+    margin-bottom: 10%;
+    place-items: center;
+}
+.st-emotion-cache-0.e1f1d6gn0{
+    display: grid;
+    place-items: center;
+    padding:20px
+}
+.row-widget.stButton{
+    display: grid;
+    place-items: center;
+}
